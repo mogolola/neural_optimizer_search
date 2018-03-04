@@ -58,6 +58,7 @@ def main():
         print ('train target network with the best learning rate %d ===========>' % best_lr)
         target.train(lr=best_lr, action=action, epochs=MAX_EPOCHS)
         acc = target.test()
+        tf.summary.scalar('accurency', acc)
         convsess.close()
         moving_acc = moving_acc * beta + acc * (1 - beta)
         reward = acc - moving_acc

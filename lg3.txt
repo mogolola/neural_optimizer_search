@@ -1,0 +1,2 @@
+current time:  14:12:33.476534 episode:  0 loss:  11.909551 last_state:  [12 14  3  8  4] last_reward:  0.09000000000000001 last_acc 0.1 moving_acc 0.009999999999999998learning_rate1e-05
+current time:  14:37:59.318698 episode:  1 loss:  35.753338 last_state:  [11  7  5  6  2] last_reward:  0.08100000000000002 last_acc 0.1 moving_acc 0.018999999999999996learning_rate0.0001
