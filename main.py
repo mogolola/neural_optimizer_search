@@ -44,7 +44,8 @@ def main():
         print("ca:", action)
 
         #train target network and get reward (accuracy on hold-out set)
-        target = Conv()
+        convsess = tf.Session()
+        target = Conv(convsess)
         target_acc_rec = []
         for i, lr in enumerate(LEARNING_RATES):
             print('train target network with learning rate %d ========>' % lr)
@@ -57,6 +58,7 @@ def main():
         print ('train target network with the best learning rate %d ===========>' % best_lr)
         target.train(lr=best_lr, action=action, epochs=MAX_EPOCHS)
         acc = target.test()
+        convsess.close()
         moving_acc = moving_acc * beta + acc * (1 - beta)
         reward = acc - moving_acc
 

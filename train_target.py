@@ -7,16 +7,19 @@ from keras.layers import Dense, Activation, Convolution2D, MaxPooling2D, Flatten
 from keras.layers.normalization import BatchNormalization
 from keras.optimizers import Adam, SGD
 from my_optimizer import my_optimizer
+from keras import backend as K
+import tensorflow as tf
 
 
 class Conv():
-    def __init__(self):
+    def __init__(self, convsess):
         (X_train, y_train), (X_test, y_test) = cifar10.load_data()
 
         self.X_train = X_train.astype('float32') / 255
         self.X_test = X_test.astype('float32') /255
         self.y_train = np_utils.to_categorical(y_train, num_classes=10)
         self.y_test = np_utils.to_categorical(y_test, num_classes=10)
+        K.set_session(convsess)
 
         self.model = Sequential()
 
@@ -85,3 +88,6 @@ class Conv():
         print('\ntest loss: ', loss)
         print('\ntest accuracy: ', accuracy)
         return accuracy
+
+
+

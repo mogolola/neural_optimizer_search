@@ -174,13 +174,6 @@ class Policy_network():
 
         tf.summary.scalar('reward', rewars[0])
         merged = tf.summary.merge_all()
-        print(states)
-        print(rewars)
-        print(labels[0])
-        print(labels[1])
-        print(labels[2])
-        print(labels[3])
-        print(labels[4])
         _, ls, summary_str, global_step = self.sess.run([self.train_op, self.total_loss, merged, self.global_step],
                                                         {self.state_input: states,
                                                          self.discounted_rewards: rewars,
@@ -194,6 +187,6 @@ class Policy_network():
 
         # epsilon greedy with decay
         if global_step != 0 and global_step % 20 == 0 and self.exploration > 0.2:
-            self.exploration *= 0.99
+            self.exploration *= 0.97
 
         return ls
