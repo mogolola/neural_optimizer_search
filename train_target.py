@@ -1,5 +1,4 @@
 import numpy as np
-from keras.datasets import mnist
 from keras.datasets import cifar10
 from keras.utils import np_utils
 from keras.models import Sequential
@@ -8,7 +7,7 @@ from keras.layers.normalization import BatchNormalization
 from keras.optimizers import Adam, SGD
 from my_optimizer import my_optimizer
 from keras import backend as K
-import tensorflow as tf
+
 
 
 class Conv():
@@ -67,27 +66,25 @@ class Conv():
                            loss='categorical_crossentropy',
                            metrics=['accuracy'])
         print('Training ------------')
-        # Another way to train the model
         self.model.fit(self.X_train, self.y_train, epochs=1, batch_size=64, )
 
     def train(self, lr, action, epochs=5):
         optimizer = my_optimizer(lr=lr, strings=action)
-        # optimizer = SGD()
+        #optimizer = SGD()
         self.model.compile(optimizer=optimizer,
                            loss='categorical_crossentropy',
                            metrics=['accuracy'])
         print('Training ------------')
-        # Another way to train the model
         self.model.fit(self.X_train, self.y_train, epochs=epochs, batch_size=64, )
 
     def test(self):
         print('\nTesting ------------')
-        # Evaluate the model with the metrics we defined earlier
         loss, accuracy = self.model.evaluate(self.X_test, self.y_test)
 
         print('\ntest loss: ', loss)
         print('\ntest accuracy: ', accuracy)
         return accuracy
+
 
 
 

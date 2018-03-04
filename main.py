@@ -12,7 +12,7 @@ MAX_EPOCHS = 5  # maximum of epochs to train target network
 EXPLORATION = 0.8   # initial rate of exploration, epsilon greedy
 REGULARIZATION = 1e-3   # regularization rate
 CONTROLLER_CELLS = 32   # number of cells in rnn controller
-LEARNING_RATES = [1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1]
+LEARNING_RATES = [1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1] #candidate learning rate for target network
 
 
 

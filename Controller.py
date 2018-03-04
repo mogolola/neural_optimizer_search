@@ -28,8 +28,8 @@ class Policy_network():
         self.policy_labels = []
 
 
-        self.reward_buffer = []
-        self.state_buffer = []
+        self.reward_buffer = [] # store rewards
+        self.state_buffer = []  # store last state
 
         self.build_policy_network()
         var_lists = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES)
@@ -64,9 +64,6 @@ class Policy_network():
 
                     #add a new classifier for each layers output
                     classifier = tf.layers.dense(inputs=outputs[:, -1, :], units=size, name='classifier_%d' % i, reuse=False)
-                    #print('outputs_%d' % i, outputs)
-                    #print ('classifier_%d' % i, classifier)
-
                     preds = tf.nn.softmax(classifier)
 
                     #feed next layer with current output, as well as state
@@ -131,7 +128,6 @@ class Policy_network():
 
 
     def get_action(self, state):
-        #return self.sess.run(self.predicted_action, {self.states: state})
         if random.random() < self.exploration:
             return np.array([random.choice(range(1, 17)), random.choice(range(1, 17)), random.choice(range(1, 12)),
                                random.choice(range(1, 12)), random.choice(range(1, 6))])
@@ -140,6 +136,7 @@ class Policy_network():
             action = []
             for i, pred in enumerate(preds):
                 print (pred)
+                #sample action from predictions
                 one_action = np.random.choice(
                     state_space['space'][i],
                     1,

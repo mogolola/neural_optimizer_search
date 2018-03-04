@@ -4,6 +4,7 @@ from keras.legacy import interfaces
 import numpy as np
 import tensorflow as tf
 
+#Search space for action
 operands = {1: 'g', 2: 'g2', 3: 'g3', 4: 'm', 5: 'v', 6: 'y', 7: 'sign(g)', 8: 'sign(m)', 9: '1', 10: 'noise',
             11: '10-4w', 12: '10-3w', 13: '10-2w', 14: '10-1w', 15: 'ADAM', 16: 'RMSProp'}
 
@@ -19,9 +20,9 @@ class my_optimizer(Optimizer):
         with K.name_scope(self.__class__.__name__):
             self.iterations = K.variable(0, dtype='int64', name='iterations')
             self.lr = K.variable(lr, name='lr')
-            self.beta_1 = K.variable(beta_1, name='beta_1')
-            self.beta_2 = K.variable(beta_2, name='beta_2')
-            self.beta_3 = K.variable(beta_3, name='beta_3')
+            self.beta_1 = K.variable(beta_1, name='beta_1') #learning rate for m_t
+            self.beta_2 = K.variable(beta_2, name='beta_2') #learning rate for v_t
+            self.beta_3 = K.variable(beta_3, name='beta_3') #learning rate for y_t
             self.decay = K.variable(decay, name='decay')
         if epsilon is None:
             epsilon = K.epsilon()
@@ -32,11 +33,8 @@ class my_optimizer(Optimizer):
         print (type(strings))
 
 
-        #if not strings:
-        #    self.op1, self.op2, self.unop1, self.unop2, self.biops = [1, 4, 3, 3, 2]
-        #else:
         self.op1, self.op2, self.unop1, self.unop2, self.biops = strings
-        #self.op1, self.op2, self.unop1, self.unop2, self.biops = [8,9,8,6,1]
+
 
     @interfaces.legacy_get_updates_support
     def get_updates(self, loss, params):
@@ -217,16 +215,6 @@ class my_optimizer(Optimizer):
             p_t = p - self.lr * delta
 
 
-
-
-            '''
-            if self.amsgrad:
-                vhat_t = K.maximum(vhat, v_t)
-                p_t = p - lr_t * m_t / (K.sqrt(vhat_t) + self.epsilon)
-                self.updates.append(K.update(vhat, vhat_t))
-            else:
-                p_t = p - lr_t * m_t / (K.sqrt(v_t) + self.epsilon)
-            '''
 
 
 
